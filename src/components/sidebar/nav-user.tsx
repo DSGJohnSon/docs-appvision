@@ -123,29 +123,25 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="w-full">
-                  <DropdownMenuItem
-                    className="w-full justify-between"
-                    onClick={() => {
-                      if (theme === "light") {
-                        setTheme("dark");
-                      } else {
-                        setTheme("light");
-                      }
-                    }}>
-                    <div className="flex items-center gap-2">
-                      {theme === "light" ? (
-                        <LucideSun className="size-4" />
-                      ) : (
-                        <LucideMoon className="size-4" />
-                      )}
-                      Mode sombre
-                    </div>
-                    <Switch checked={theme === "dark"} />
-                  </DropdownMenuItem>
-                </DropdownMenuTrigger>
-              </DropdownMenu>
+              <DropdownMenuItem
+                className="w-full justify-between cursor-pointer"
+                onClick={() => {
+                  if (theme === "light") {
+                    setTheme("dark");
+                  } else {
+                    setTheme("light");
+                  }
+                }}>
+                <div className="flex items-center gap-2">
+                  {theme === "light" ? (
+                    <LucideSun className="size-4" />
+                  ) : (
+                    <LucideMoon className="size-4" />
+                  )}
+                  Mode sombre
+                </div>
+                <Switch checked={theme === "dark"} />
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
