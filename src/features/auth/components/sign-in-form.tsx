@@ -23,6 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { LucideLoader } from "lucide-react";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export function LoginForm({
   className,
@@ -43,58 +46,91 @@ export function LoginForm({
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div className={cn("w-full", className)} {...props}>
+      <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
+          <CardTitle className="text-2xl text-center">Connexion</CardTitle>
+          <CardDescription className="text-center">
+            Connectez-vous à votre compte pour accéder à la documentation
+            commerciale de AppVision™
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <Separator />
+        <CardContent className="mt-4">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="email@email.fr"
-                        type="email"
-                        disabled={isPending}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="email@email.fr"
+                          type="email"
+                          disabled={isPending}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mot de passe</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="xxx-xxx-xxx"
+                          type="password"
+                          disabled={isPending}
+                          {...field}
+                        />
+                      </FormControl>
+                      <div className="flex justify-between items-center w-full">
+                        <FormMessage />
+                        <div className="w-full text-end">
+                          <Link
+                            href="/forgot-password"
+                            title="J'ai oublié mon mot de passe"
+                            className="text-xs text-primary hover:underline cursor-pointer">
+                            Mot de passe oublié ?
+                          </Link>
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button type="submit" disabled={isPending} className="w-full">
+                {isPending ? (
+                  <>
+                    <LucideLoader className="size-4 mr-2 animate-spin" />
+                    <span>Chargement...</span>
+                  </>
+                ) : (
+                  "Je me connecte"
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="xxx-xxx-xxx"
-                        type="password"
-                        disabled={isPending}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isPending}>
-                Sign in
               </Button>
             </form>
           </Form>
+        </CardContent>
+        <Separator />
+        <CardContent className="mt-6">
+          <div className="flex justify-center gap-2 text-xs text-primary">
+            <span>Pas encore de compte ?</span>
+            <Link
+              href="/sign-up"
+              title="Je n'ai pas de compte"
+              className="hover:underline cursor-pointer">
+              Je commence maintenant !
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

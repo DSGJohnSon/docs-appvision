@@ -23,6 +23,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRegister } from "@/features/auth/api/use-register";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { LucideLoader } from "lucide-react";
+import PasswordSecurityTest from "./password-security-test";
 
 export function SignUpForm({
   className,
@@ -44,75 +48,106 @@ export function SignUpForm({
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div className={cn("w-full", className)} {...props}>
+      <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl">Register</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
+          <CardTitle className="text-2xl text-center">Inscription</CardTitle>
+          <CardDescription className="text-center">
+            Inscrivez-vous à votre compte pour accéder à la documentation
+            commerciale de AppVision™
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <Separator />
+        <CardContent className="mt-4">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="John Doe"
-                        disabled={isPending}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Prénom & Nom</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="John Doe"
+                          type="text"
+                          disabled={isPending}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="email@email.fr"
+                          type="email"
+                          disabled={isPending}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mot de passe</FormLabel>
+                      <FormControl>
+                        <div>
+                          <Input
+                            placeholder="xxx-xxx-xxx"
+                            type="password"
+                            disabled={isPending}
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <div>
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <FormMessage />
+                        </div>
+                        <PasswordSecurityTest password={field.value} />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button type="submit" disabled={isPending} className="w-full">
+                {isPending ? (
+                  <>
+                    <LucideLoader className="size-4 mr-2 animate-spin" />
+                    <span>Chargement...</span>
+                  </>
+                ) : (
+                  "Je m'inscris"
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="email@email.fr"
-                        type="email"
-                        disabled={isPending}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="xxx-xxx-xxx"
-                        type="password"
-                        disabled={isPending}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isPending}>
-                Sign up
               </Button>
             </form>
           </Form>
+        </CardContent>
+        <Separator />
+        <CardContent className="mt-6">
+          <div className="flex justify-center gap-2 text-xs text-primary">
+            <span>Déjà membre ?</span>
+            <Link
+              href="/sign-in"
+              title="Je n'ai pas de compte"
+              className="hover:underline cursor-pointer">
+              Je me connecte maintenant !
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
