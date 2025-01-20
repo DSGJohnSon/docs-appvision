@@ -112,9 +112,11 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem disabled>
-                <LucideBadgeCheck className="size-4" />
-                Account
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href={"/profile"} title="Voir mon compte" passHref>
+                  <LucideBadgeCheck className="size-4" />
+                  Compte
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem disabled>
                 <LucideBell className="size-4" />

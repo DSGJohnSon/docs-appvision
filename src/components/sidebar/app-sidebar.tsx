@@ -1,17 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  LucideChevronsLeft,
-  LucideChevronsRight,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { LucideChevronsLeft, LucideChevronsRight } from "lucide-react";
 
 import { NavMain } from "@/components/sidebar/nav-main";
 import { NavProjects } from "@/components/sidebar/nav-projects";
@@ -30,114 +20,9 @@ import {
 import { useCurrent } from "@/features/auth/api/use-current";
 import Image from "next/image";
 import { Button } from "../ui/button";
-
-// This is sample data.
-const temp = {
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-};
+import Link from "next/link";
+import { Separator } from "../ui/separator";
+import { temp } from "@/data/temp";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: user, isLoading } = useCurrent();
@@ -148,19 +33,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem onClick={toggleSidebar}>
+          <SidebarMenuItem>
             <SidebarMenuButton
               className="text-sidebar-foreground/70 flex gap-4"
               asChild>
               <div>
                 {open ? (
-                  <Button variant={"ghost"} size={"icon"}>
+                  <Button
+                    variant={"ghost"}
+                    size={"icon"}
+                    onClick={toggleSidebar}>
                     <LucideChevronsLeft className="text-sidebar-foreground/70" />
                   </Button>
                 ) : (
-                  <LucideChevronsRight className="text-sidebar-foreground/70" />
+                  <LucideChevronsRight
+                    className="text-sidebar-foreground/70 cursor-pointer"
+                    onClick={toggleSidebar}
+                  />
                 )}
-                <div className="flex items-center gap-2">
+                <Link
+                  href={"/"}
+                  title="Retour à la doc"
+                  className="flex items-center gap-2">
                   <Image
                     src={"/favicon/favicon-prysm.ico"}
                     alt="Prysm"
@@ -168,10 +62,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     height={24}
                   />
                   <span className="font-bold truncate">Prysm Docs</span>
-                </div>
+                </Link>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
+          {!open ? (
+            <SidebarMenuItem className="space-y-4 mt-2">
+              <Link
+                href={"/"}
+                title="Retour à la doc"
+                className="flex items-center justify-center">
+                <Image
+                  src={"/favicon/favicon-prysm.ico"}
+                  alt="Prysm"
+                  className="hover:animate-spin"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+              <Separator />
+            </SidebarMenuItem>
+          ) : null}
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
