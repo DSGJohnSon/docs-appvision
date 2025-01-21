@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 function BreadcrumbPages() {
   //Get pathname
@@ -112,7 +113,14 @@ function BreadcrumbPages() {
           {/* Finally, always render last page of the pathname */}
           {pathArray.length > 1 && (
             <BreadcrumbItem>
-              <BreadcrumbPage className="capitalize">
+              <BreadcrumbPage
+                className={cn(
+                  "capitalize",
+                  pathArray[0] === "admin" &&
+                    pathArray[1] === "documents" &&
+                    pathArray.length > 2 &&
+                    "before:content-['#'] text-xs py-1 px-2 bg-foreground/10 hover:bg-foreground/15 transition cursor-default text-muted-foreground rounded-md"
+                )}>
                 {pathArray[pathArray.length - 1]}
               </BreadcrumbPage>
             </BreadcrumbItem>
